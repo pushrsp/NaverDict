@@ -14,7 +14,7 @@ function GetSize(e) {
     return [top, left];
 }
 
-function GetPopup(top, left, e) {
+function GetPopup(top, left) {
     const parent = document.createElement("div");
     parent.id = "Naver-Dict-Popup";
     parent.className = "tooltip";
@@ -33,11 +33,26 @@ function OnMouseUp(event) {
         return;
 
     const [top, left] = GetSize(event);
-    document.body.appendChild(GetPopup(top, left, event));
+    document.body.appendChild(GetPopup(top, left));
+}
+
+function OnClick(event) {
+    const popup = document.getElementById("Naver-Dict-Popup");
+    //popup 이 없는 경우
+    if(popup === null)
+        return;
+
+    //현재 클릭한 마우스 좌표 X가 popup 좌표에 속하는 경우
+    if(popup.getBoundingClientRect().x <= event.screenX && event.screenX <= popup.getBoundingClientRect().x + Width)
+        return;
+
+    popup.remove();
+
 }
 
 function Init() {
     document.onmouseup = OnMouseUp;
+    document.onclick = OnClick;
 }
 
 window.onload = Init;
