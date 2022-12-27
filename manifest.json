@@ -17,5 +17,6 @@
       "js": ["./scripts/content.js"],
       "css": ["./scripts/content.css"]
     }
-  ]
+  ],
+  "host_permissions": ["https://dict.naver.com/*"]
 }

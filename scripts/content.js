@@ -3,6 +3,7 @@ const EngRegex = /^[a-z|A-Z]+$/
 const Offset = { Y: 100, X: 40, OverflowY: 30 };
 const Width = 250;
 const Height = 200;
+const PopupId = "Naver-Dict-Popup";
 
 function GetSize(e) {
     let top = e.screenY + document.querySelector('html').scrollTop - Offset.Y;
@@ -14,16 +15,36 @@ function GetSize(e) {
     return [top, left];
 }
 
+function GetDefaultHttpOption() {
+    return {
+        method: "GET",
+        headers: {"Content-Type": "text/html;charset=UTF-8"}
+    };
+}
+
 function GetPopup(top, left) {
     const parent = document.createElement("div");
-    parent.id = "Naver-Dict-Popup";
+    parent.id = PopupId;
     parent.className = "tooltip";
     parent.style.cssText = `top:${top}px;left:${left}px;margin-left:-60px;`;
 
     return parent;
 }
 
-function OnMouseUp(event) {
+function GetResult(text) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({text}, response => {
+            const [result, error] = response;
+
+            if(result === null)
+                reject(error);
+            else
+                resolve(result);
+        })
+    })
+}
+
+async function OnMouseUp(event) {
     const selection = window.getSelection();
     if(selection.rangeCount <= 0)
         return;
@@ -32,12 +53,17 @@ function OnMouseUp(event) {
     if(!EngRegex.test(text))
         return;
 
+    const result = await GetResult(text);
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(result.body, "text/html");
+
+    console.log(dom.getElementsByClassName("dic_search_result"));
     const [top, left] = GetSize(event);
     document.body.appendChild(GetPopup(top, left));
 }
 
 function OnClick(event) {
-    const popup = document.getElementById("Naver-Dict-Popup");
+    const popup = document.getElementById(PopupId);
     //popup 이 없는 경우
     if(popup === null)
         return;
@@ -47,7 +73,6 @@ function OnClick(event) {
         return;
 
     popup.remove();
-
 }
 
 function Init() {
