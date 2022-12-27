@@ -15,19 +15,23 @@ function GetSize(e) {
     return [top, left];
 }
 
-function GetDefaultHttpOption() {
-    return {
-        method: "GET",
-        headers: {"Content-Type": "text/html;charset=UTF-8"}
-    };
-}
-
-function GetPopup(top, left) {
+function GetPopup(top, left, dom) {
     const parent = document.createElement("div");
     parent.id = PopupId;
     parent.className = "tooltip";
     parent.style.cssText = `top:${top}px;left:${left}px;margin-left:-60px;`;
 
+    const result = dom.getElementsByClassName("dic_search_result").item(0);
+    for(let i = 0; i < result.childElementCount; i++) {
+        if(result.children.item(i).tagName !== "DD")
+            continue;
+
+        const content = document.createElement("div");
+        content.innerHTML = result.children.item(i).innerHTML;
+        content.className = "tooltip-text";
+
+        parent.appendChild(content);
+    }
     return parent;
 }
 
@@ -57,9 +61,11 @@ async function OnMouseUp(event) {
     const parser = new DOMParser();
     const dom = parser.parseFromString(result.body, "text/html");
 
-    console.log(dom.getElementsByClassName("dic_search_result"));
+    if(dom.getElementById("notfound"))
+        return;
+
     const [top, left] = GetSize(event);
-    document.body.appendChild(GetPopup(top, left));
+    document.body.appendChild(GetPopup(top, left, dom));
 }
 
 function OnClick(event) {

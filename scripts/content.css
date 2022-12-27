@@ -6,4 +6,11 @@
     background-color: #cfdfff;
     border: #7689fd solid 1px;
     border-radius: 6px;
+    overflow: auto;
+}
+
+.tooltip-text {
+    color: black;
+    font-weight: bold;
+    font-size: 11px;
 }
