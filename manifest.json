@@ -10,7 +10,6 @@
   "action": {
     "default_popup": "./popup/popup.html"
   },
-  "permissions": ["storage"],
   "background": {
     "service_worker": "./scripts/background.js"
   },
