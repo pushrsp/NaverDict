@@ -53,7 +53,7 @@ async function OnMouseUp(event) {
     if(selection.rangeCount <= 0)
         return;
 
-    const text = selection.getRangeAt(0).cloneContents().textContent;
+    const text = selection.getRangeAt(0).cloneContents().textContent.trim();
     if(!EngRegex.test(text))
         return;
 
