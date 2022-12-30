@@ -1,18 +1,18 @@
 const EngRegex = /^[a-z|A-Z]+$/
 
-const Offset = { Y: 100, X: 40, OverflowY: 30 };
+const Offset = { Y: 20, X: 10, OverflowY: 30 };
 const Width = 250;
-const Height = 200;
 const PopupId = "Naver-Dict-Popup";
 
-let OS = "Win";
-
 function GetSize(e) {
-    let top = e.screenY + document.querySelector('html').scrollTop - Offset.Y;
-    let left = e.screenX - Offset.X;
+    let top = e.clientY + document.querySelector("html").scrollTop + Offset.Y;
+    let left = e.clientX - 180 + document.querySelector('html').scrollLeft
 
-    if(e.screenY + Height >= screen.availHeight)
-        top -= Height + Offset.OverflowY;
+    if (e.clientX - 180 < Offset.X)
+        left = Offset.X + document.querySelector('html').scrollLeft;
+
+    if (left + Width > window.width)
+        left = window.width - Width - Offset.X;
 
     return [top, left];
 }
@@ -62,7 +62,7 @@ function GetPopup(top, left, dom) {
     const parent = document.createElement("div");
     parent.id = PopupId;
     parent.className = "tooltip";
-    parent.style.cssText = `top:${top}px;left:${left}px;margin-left:-60px;`;
+    parent.style.cssText = `top:${top}px;left:${left}px;`;
 
     const result = dom.getElementsByClassName("dic_search_result").item(0);
 
@@ -122,11 +122,6 @@ function OnClick(event) {
 }
 
 function Init() {
-    if(window.navigator.platform.toLowerCase().startsWith("win"))
-        OS = "Win";
-    else
-        OS = "Mac";
-
     document.onmouseup = OnMouseUp;
     document.onclick = OnClick;
 }
