@@ -43,17 +43,14 @@ function GetBody(body) {
     const div = document.createElement("div");
     div.className = "tooltip-body";
 
-    const content = body.innerHTML.split("\n").filter((el) => el.trim().length > 0).map(el => el.trim());
-    for(let i = 0; i < content.length; i += 4) {
+    const content = body.innerHTML.split("<br>");
+    for(let i = 0; i < content.length; i++) {
         const data = document.createElement("div");
         data.className = "tooltip-data";
+        data.innerHTML = content[i];
 
-        const number = document.createElement("span");
-        number.innerText = content[i] + " ";
-        number.innerText += new DOMParser().parseFromString(content[i + 1], "text/html").getElementsByClassName("word_class").item(0).innerText.trim() + " ";
-        number.innerText += content[i + 2];
-
-        data.appendChild(number);
+        if(i !== content.length - 1)
+            data.style.borderBottom = "dashed #32a1ce";
 
         div.appendChild(data);
     }
@@ -72,17 +69,6 @@ function GetPopup(top, left, dom) {
     parent.appendChild(GetTitle(result.children.item(0)));
     parent.appendChild(GetBody(result.children.item(1)));
 
-    // const result = dom.getElementsByClassName("dic_search_result").item(0);
-    // for(let i = 0; i < result.childElementCount; i++) {
-    //     if(result.children.item(i).tagName !== "DD")
-    //         continue;
-    //
-    //     const content = document.createElement("div");
-    //     content.innerHTML = result.children.item(i).innerHTML;
-    //     content.className = "tooltip-text";
-    //
-    //     parent.appendChild(content);
-    // }
     return parent;
 }
 
@@ -100,6 +86,10 @@ function GetResult(text) {
 }
 
 async function OnMouseUp(event) {
+    const popup = document.getElementById(PopupId);
+    if(popup !== null)
+        return;
+
     const selection = window.getSelection();
     if(selection.rangeCount <= 0)
         return;

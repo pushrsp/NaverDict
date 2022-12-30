@@ -12,10 +12,25 @@
     flex-direction: column;
 }
 
+.tooltip::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tooltip::-webkit-scrollbar-thumb {
+    height: 10%;
+    background: #217af4;
+    border-radius: 10px;
+}
+
+.tooltip::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+}
+
 .tooltip-title {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    border-bottom: thick double #32a1ce;
 }
 
 .tooltip-title .text {
