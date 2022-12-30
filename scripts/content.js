@@ -5,6 +5,8 @@ const Width = 250;
 const Height = 200;
 const PopupId = "Naver-Dict-Popup";
 
+let OS = "Win";
+
 function GetSize(e) {
     let top = e.screenY + document.querySelector('html').scrollTop - Offset.Y;
     let left = e.screenX - Offset.X;
@@ -15,6 +17,36 @@ function GetSize(e) {
     return [top, left];
 }
 
+function GetTitle(title) {
+    const div = document.createElement("div");
+    div.className = "tooltip-title";
+
+    const text = document.createElement("span");
+    text.className = "text";
+    text.innerText = title.children.item(0).children.item(0).children.item(0).innerHTML.trim();
+
+    div.appendChild(text);
+
+    const pronoun = title.getElementsByClassName("fnt_e25");
+    if(pronoun.length > 0) {
+        const pn = document.createElement("span");
+        pn.className = "pronoun";
+        pn.innerText = pronoun.item(0).innerText.trim();
+
+        div.appendChild(pn);
+    }
+
+    return div;
+}
+
+function GetBody(body) {
+    const div = document.createElement("div");
+    div.className = "tooltip-body";
+    console.log(body)
+
+    return div;
+}
+
 function GetPopup(top, left, dom) {
     const parent = document.createElement("div");
     parent.id = PopupId;
@@ -22,16 +54,21 @@ function GetPopup(top, left, dom) {
     parent.style.cssText = `top:${top}px;left:${left}px;margin-left:-60px;`;
 
     const result = dom.getElementsByClassName("dic_search_result").item(0);
-    for(let i = 0; i < result.childElementCount; i++) {
-        if(result.children.item(i).tagName !== "DD")
-            continue;
 
-        const content = document.createElement("div");
-        content.innerHTML = result.children.item(i).innerHTML;
-        content.className = "tooltip-text";
+    parent.appendChild(GetTitle(result.children.item(0)));
+    parent.appendChild(GetBody(result.children.item(1)));
 
-        parent.appendChild(content);
-    }
+    // const result = dom.getElementsByClassName("dic_search_result").item(0);
+    // for(let i = 0; i < result.childElementCount; i++) {
+    //     if(result.children.item(i).tagName !== "DD")
+    //         continue;
+    //
+    //     const content = document.createElement("div");
+    //     content.innerHTML = result.children.item(i).innerHTML;
+    //     content.className = "tooltip-text";
+    //
+    //     parent.appendChild(content);
+    // }
     return parent;
 }
 
@@ -82,6 +119,11 @@ function OnClick(event) {
 }
 
 function Init() {
+    if(window.navigator.platform.toLowerCase().startsWith("win"))
+        OS = "Win";
+    else
+        OS = "Mac";
+
     document.onmouseup = OnMouseUp;
     document.onclick = OnClick;
 }

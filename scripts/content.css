@@ -2,16 +2,35 @@
     width: 250px;
     z-index: 1000;
     position: absolute;
-    height: 200px;
+    height: 150px;
     background-color: #cfdfff;
     border: #7689fd solid 1px;
-    border-radius: 6px;
+    border-radius: 3px;
     overflow: auto;
     opacity: 100 !important;
+    display: flex;
+    flex-direction: column;
 }
 
-.tooltip-text {
-    color: black;
+.tooltip-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.tooltip-title .text {
     font-weight: bold;
-    font-size: 11px;
+    font-size: 15px;
+    margin-right: 4px;
+}
+
+.tooltip-title .pronoun {
+    font-size: 14px;
+}
+
+.tooltip-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: black;
 }
