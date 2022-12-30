@@ -115,8 +115,7 @@ function OnClick(event) {
     if(popup === null)
         return;
 
-    //현재 클릭한 마우스 좌표 X가 popup 좌표에 속하는 경우
-    if(popup.getBoundingClientRect().x <= event.screenX && event.screenX <= popup.getBoundingClientRect().x + Width)
+    if(event.path.filter(el => el.id === "Naver-Dict-Popup").length > 0)
         return;
 
     popup.remove();
