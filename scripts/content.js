@@ -42,7 +42,21 @@ function GetTitle(title) {
 function GetBody(body) {
     const div = document.createElement("div");
     div.className = "tooltip-body";
-    console.log(body)
+
+    const content = body.innerHTML.split("\n").filter((el) => el.trim().length > 0).map(el => el.trim());
+    for(let i = 0; i < content.length; i += 4) {
+        const data = document.createElement("div");
+        data.className = "tooltip-data";
+
+        const number = document.createElement("span");
+        number.innerText = content[i] + " ";
+        number.innerText += new DOMParser().parseFromString(content[i + 1], "text/html").getElementsByClassName("word_class").item(0).innerText.trim() + " ";
+        number.innerText += content[i + 2];
+
+        data.appendChild(number);
+
+        div.appendChild(data);
+    }
 
     return div;
 }
