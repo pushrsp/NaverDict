@@ -19,7 +19,7 @@ function GetSize(e) {
 
 function GetTitle(title) {
     const div = document.createElement("div");
-    div.className = "tooltip-title";
+    div.className = "Naver-Dict-tooltip-title";
 
     const text = document.createElement("span");
     text.className = "text";
@@ -41,12 +41,12 @@ function GetTitle(title) {
 
 function GetBody(body) {
     const div = document.createElement("div");
-    div.className = "tooltip-body";
+    div.className = "Naver-Dict-tooltip-body";
 
     const content = body.innerHTML.split("<br>");
     for(let i = 0; i < content.length; i++) {
         const data = document.createElement("div");
-        data.className = "tooltip-data";
+        data.className = "Naver-Dict-tooltip-data";
         data.innerHTML = content[i];
 
         if(i !== content.length - 1)
@@ -61,7 +61,7 @@ function GetBody(body) {
 function GetPopup(top, left, dom) {
     const parent = document.createElement("div");
     parent.id = PopupId;
-    parent.className = "tooltip";
+    parent.className = "Naver-Dict-tooltip";
     parent.style.cssText = `top:${top}px;left:${left}px;`;
 
     const result = dom.getElementsByClassName("dic_search_result").item(0);

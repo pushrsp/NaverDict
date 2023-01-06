@@ -1,4 +1,4 @@
-.tooltip {
+.Naver-Dict-tooltip {
     width: 250px;
     z-index: 1000;
     position: absolute;
@@ -13,38 +13,38 @@
     color: black;
 }
 
-.tooltip::-webkit-scrollbar {
+.Naver-Dict-tooltip::-webkit-scrollbar {
     width: 6px;
 }
 
-.tooltip::-webkit-scrollbar-thumb {
+.Naver-Dict-tooltip::-webkit-scrollbar-thumb {
     height: 10%;
     background: #217af4;
     border-radius: 10px;
 }
 
-.tooltip::-webkit-scrollbar-track {
+.Naver-Dict-tooltip::-webkit-scrollbar-track {
     background: rgba(33, 122, 244, .1);
 }
 
-.tooltip-title {
+.Naver-Dict-tooltip-title {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     border-bottom: thick double #32a1ce;
 }
 
-.tooltip-title .text {
+.Naver-Dict-tooltip-title .text {
     font-weight: bold;
     font-size: 15px;
     margin-right: 4px;
 }
 
-.tooltip-title .pronoun {
+.Naver-Dict-tooltip-title .pronoun {
     font-size: 14px;
 }
 
-.tooltip-body {
+.Naver-Dict-tooltip-body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -53,7 +53,7 @@
     font-size: 12px;
 }
 
-.tooltip-body .tooltip-data {
+.Naver-Dict-tooltip-body .Naver-Dict-tooltip-data {
     width: 100%;
     height: auto;
     margin-bottom: 2px;
