@@ -10,6 +10,7 @@
     opacity: 100 !important;
     display: flex;
     flex-direction: column;
+    color: black;
 }
 
 .tooltip::-webkit-scrollbar {
