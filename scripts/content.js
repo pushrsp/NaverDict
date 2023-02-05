@@ -23,7 +23,7 @@ function GetTitle(title) {
     div.className = "Naver-Dict-tooltip-title";
 
     const text = document.createElement("span");
-    text.className = "text";
+    text.className = "Naver-Dict-tooltip-title-text";
     text.innerText = title.children.item(0).children.item(0).children.item(0).innerHTML.trim();
 
     div.appendChild(text);
@@ -31,7 +31,7 @@ function GetTitle(title) {
     const pronoun = title.getElementsByClassName("fnt_e25");
     if(pronoun.length > 0) {
         const pn = document.createElement("span");
-        pn.className = "pronoun";
+        pn.className = "Naver-Dict-tooltip-title-pronoun";
         pn.innerText = pronoun.item(0).innerText.trim();
 
         div.appendChild(pn);
