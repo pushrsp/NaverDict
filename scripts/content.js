@@ -2,7 +2,8 @@ const EngRegex = /^[a-z|A-Z]+$/
 
 const Offset = { Y: 20, X: 10, OverflowY: 30 };
 const Width = 250;
-const PopupId = "Naver-Dict-Popup";
+const POPUP_ID = "Naver-Dict-Popup";
+const POPUP_CLASS_NAME = "Naver-Dict-tooltip";
 
 function GetSize(e) {
     let top = e.clientY + document.querySelector("html").scrollTop + Offset.Y;
@@ -60,7 +61,7 @@ function GetBody(body) {
 
 function GetPopup(top, left, dom) {
     const parent = document.createElement("div");
-    parent.id = PopupId;
+    parent.id = POPUP_ID;
     parent.className = "Naver-Dict-tooltip";
     parent.style.cssText = `top:${top}px;left:${left}px;`;
 
@@ -86,7 +87,7 @@ function GetResult(text) {
 }
 
 async function OnMouseUp(event) {
-    const popup = document.getElementById(PopupId);
+    const popup = document.getElementById(POPUP_ID);
     if(popup !== null)
         return;
 
@@ -110,12 +111,12 @@ async function OnMouseUp(event) {
 }
 
 function OnClick(event) {
-    const popup = document.getElementById(PopupId);
+    const popup = document.getElementById(POPUP_ID);
     //popup 이 없는 경우
     if(popup === null)
         return;
 
-    if(event.path.filter(el => el.id === "Naver-Dict-Popup").length > 0)
+    if(event.target.className.includes(POPUP_CLASS_NAME))
         return;
 
     popup.remove();
