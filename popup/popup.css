@@ -1,5 +1,52 @@
 body {
-    width: 170px;
+    width: 200px;
     height: 20px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+/*body::-webkit-scrollbar {*/
+/*    width: 6px;*/
+/*}*/
+
+/*body::-webkit-scrollbar-thumb {*/
+/*    height: 10%;*/
+/*    background: #217af4;*/
+/*    border-radius: 10px;*/
+/*}*/
+
+/*body::-webkit-scrollbar-track {*/
+/*    background: rgba(33, 122, 244, .1);*/
+/*}*/
+
+.Naver-Dict-Popup-Header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Naver-Dict-Popup-Header .Naver-Dict-Word-Button {
+    background: #03c75a;
+    color: white;
+    border: 1px solid #03c75a;
+    cursor: pointer;
+    border-radius: 3px;
+    opacity: 1;
+}
+
+.Naver-Dict-Popup-Header .Naver-Dict-Word-Button:hover {
+    opacity: 0.5;
+}
+
+.Naver-Dict-Popup-Header .Naver-Dict-Word-Input {
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+.Naver-Dict-Popup-Body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
