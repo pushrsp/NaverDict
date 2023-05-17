@@ -1,25 +1,11 @@
 body {
-    width: 200px;
+    width: 250px;
     height: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     overflow: auto;
 }
-
-/*body::-webkit-scrollbar {*/
-/*    width: 6px;*/
-/*}*/
-
-/*body::-webkit-scrollbar-thumb {*/
-/*    height: 10%;*/
-/*    background: #217af4;*/
-/*    border-radius: 10px;*/
-/*}*/
-
-/*body::-webkit-scrollbar-track {*/
-/*    background: rgba(33, 122, 244, .1);*/
-/*}*/
 
 .Naver-Dict-Popup-Header {
     display: flex;
@@ -33,6 +19,7 @@ body {
     cursor: pointer;
     border-radius: 3px;
     opacity: 1;
+    height: 23px;
 }
 
 .Naver-Dict-Popup-Header .Naver-Dict-Word-Button:hover {
@@ -43,10 +30,37 @@ body {
     cursor: pointer;
     border: 1px solid;
     border-radius: 3px;
+    width: 190px;
+    margin-bottom: 5px;
+    height: 20px;
 }
 
 .Naver-Dict-Popup-Body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    font-size: 12px;
+    align-items: center;
+}
+
+.Naver-Dict-Popup-Body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.Naver-Dict-Popup-Body::-webkit-scrollbar-thumb {
+    height: 10%;
+    background: #217af4;
+    border-radius: 10px;
+}
+
+.Naver-Dict-Popup-Body::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+}
+
+.Naver-Dict-Popup-Body-Data{
+    width: 100%;
+    height: auto;
+    margin-bottom: 2px;
 }
