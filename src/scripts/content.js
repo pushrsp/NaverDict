@@ -24,33 +24,24 @@ function GetTitle(title) {
 
     const text = document.createElement("span");
     text.className = "Naver-Dict-tooltip-title-text";
-    text.innerText = title.children.item(0).children.item(0).children.item(0).innerHTML.trim();
+    text.innerText = title;
 
     div.appendChild(text);
-
-    const pronoun = title.getElementsByClassName("fnt_e25");
-    if(pronoun.length > 0) {
-        const pn = document.createElement("span");
-        pn.className = "Naver-Dict-tooltip-title-pronoun";
-        pn.innerText = pronoun.item(0).innerText.trim();
-
-        div.appendChild(pn);
-    }
 
     return div;
 }
 
-function GetBody(body) {
+function GetBody(response) {
     const div = document.createElement("div");
     div.className = "Naver-Dict-tooltip-body";
 
-    const content = body.innerHTML.split("<br>");
-    for(let i = 0; i < content.length; i++) {
+    const result = response.getElementsByTagName("daum:word")
+    for(let i = 0; i < result.length; i++) {
         const data = document.createElement("div");
         data.className = "Naver-Dict-tooltip-data";
-        data.innerHTML = content[i];
+        data.textContent = result[i].textContent;
 
-        if(i !== content.length - 1)
+        if(i !== result.length - 1)
             data.style.borderBottom = "dashed #32a1ce";
 
         div.appendChild(data);
@@ -59,16 +50,17 @@ function GetBody(body) {
     return div;
 }
 
-function GetPopup(top, left, dom) {
+function GetPopup(top, left, element, title) {
     const parent = document.createElement("div");
     parent.id = POPUP_ID;
     parent.className = "Naver-Dict-tooltip";
     parent.style.cssText = `top:${top}px;left:${left}px;`;
 
-    const result = dom.getElementsByClassName("dic_search_result").item(0);
+    // const response = dom.getElementsByClassName("list_mean")[0];
+    // const result = dom.getElementsByClassName("dic_search_result").item(0);
 
-    parent.appendChild(GetTitle(result.children.item(0)));
-    parent.appendChild(GetBody(result.children.item(1)));
+    parent.appendChild(GetTitle(title));
+    parent.appendChild(GetBody(element));
 
     return parent;
 }
@@ -99,15 +91,16 @@ async function OnMouseUp(event) {
     if(!EngRegex.test(text))
         return;
 
-    const result = await GetResult(text);
+    const response = await GetResult(text);
     const parser = new DOMParser();
-    const dom = parser.parseFromString(result.body, "text/html");
+    const dom = parser.parseFromString(response.body, "text/html");
 
-    if(dom.getElementById("notfound"))
+    const elements = dom.getElementsByClassName("cleanword_type kuek_type");
+    if(elements.length === 0)
         return;
 
     const [top, left] = GetSize(event);
-    document.body.appendChild(GetPopup(top, left, dom));
+    document.body.appendChild(GetPopup(top, left, elements[0], text));
 }
 
 function OnClick(event) {

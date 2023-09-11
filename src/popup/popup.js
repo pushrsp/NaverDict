@@ -11,18 +11,16 @@ function GetResult(text) {
     })
 }
 
-function SetData(dom) {
-    const result = dom.getElementsByClassName("dic_search_result").item(0);
-    const body = result.children.item(1);
-    const content = body.innerHTML.split("<br>");
+function SetData(response) {
+    const result = response.getElementsByTagName("daum:word")
 
     const div = document.createElement("div");
     div.className = "Naver-Dict-Popup-Body";
 
-    for(let i = 0; i < content.length; i++) {
+    for(let i = 0; i < result.length; i++) {
         const data = document.createElement("div");
         data.className = "Naver-Dict-Popup-Body-Data";
-        data.innerHTML = content[i];
+        data.textContent = result[i].textContent;
 
         div.append(data);
     }
@@ -39,7 +37,8 @@ async function onClickSearchButton() {
     const parser = new DOMParser();
     const dom = parser.parseFromString(response.body, "text/html");
 
-    if(dom.getElementById("notfound"))
+    let elements = dom.getElementsByClassName("cleanword_type kuek_type");
+    if(elements.length === 0)
         return;
 
     const body = document.getElementById("Naver-Dict-Popup-Body");
@@ -48,7 +47,7 @@ async function onClickSearchButton() {
             body.removeChild(body.children.item(i));
     }
 
-    body.append(SetData(dom));
+    body.append(SetData(elements[0]));
 }
 
 document.getElementById("Naver-Dict-word-button").addEventListener("click", onClickSearchButton);
